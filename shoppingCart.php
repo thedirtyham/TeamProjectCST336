@@ -1,9 +1,10 @@
 <?php
-
-
-include 'DataBaseCalls.php'
-
-
+include 'DataBaseCalls.php';
+ if (isset($_GET['shoppingCart'])){
+$class1 = $_GET["class1"]; 
+$class2 = $_GET["class2"];
+$class3 = $_GET["class3"];
+}
 ?>
 <html>
 <head>
@@ -16,8 +17,7 @@ include 'DataBaseCalls.php'
   <link rel="stylesheet" type="text/css" href="TeamProject.css">
 </head>
 <body>
-    
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -48,50 +48,22 @@ include 'DataBaseCalls.php'
         <!-- /.container -->
     </nav>
     
-
     
     <div class="container">
-  <h1>Classes</h1>
-  <p>Choose what classes you would like to enroll. Use the course Id to enroll in them (you must choose 3) </p>   
-      <form action = "shoppingCart.php">
-     <input type="Text" name="class1" />
-     </br>
-      <input type="text" name="class2"/>
-      </br>
-      <input type="text" name="class3" />
-      </br>
-      <input class="btn btn-primary" type="submit" name = "shoppingCart" value="GO to cart!"/>
-  </form>
-   <?php
-   require_once("DataBaseCalls.php");
-
-   
-   if (isset($_GET['shoppingCart'])){
-     $_SESSION['class1'] = $_GET["class1"]; 
-     $_SESSION['class2']  = $_GET["class2"]; 
-     $_SESSION['class2']  = $_GET["class3"]; 
-    //   if (!$orderBY = "id"||!$orderBY = "name"|| !!$orderBY = "dept_name")
-    //   {
-          $nothing = true;
-          echo $orderBY;
-    //  }
-    }
-    ?>
-  <table  class="table table-hover", "clickable-row">
+  <h1>Shopping Cat</h1>
+  <p>Thank you for choosing the classes you would like to enroll in Please press checkout to contuine. </p>
+   <table  class="table table-hover">
   <div>
     <?php
-    $sql = "select * from course";
+    $sql = "select * from course where course_id in ('$class1','$class2','$class3')";
     $result = getQuery($sql);
     if ($result->num_rows > 0) {
-    echo "<tr ><th> Course_id </th><th> Title </th>
+    echo "<tr class='clickable-row'><th> Course_id </th><th> Title </th>
     <th> dept_name </th><th> credits </th></tr>";
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "<tr class='clickable-row' data-href='http://google.com'>
-        <td>".$row["course_id"]." </td>
-        <td>".$row["title"]."</td>
-        <td>".$row["dept_name"]."</td>
-        <td>".$row["credits"]."</td></tr>";
+        echo "<tr><td>".$row["course_id"]."</td><td>".$row["title"]."</td>
+        <td>".$row["dept_name"]."</td><td>".$row["credits"]."</td></tr>";
     }
     echo ""  . "</br>";
 } else {
@@ -100,13 +72,10 @@ include 'DataBaseCalls.php'
      ?>
 </div>
 </div>
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        alert("Swag");
-    });
-});
-</script>
+<div>
     
-</body>
-</html>
+<button class="btn btn-primary">Check Out!</button>
+</div>
+    
+    </body>
+    </html>

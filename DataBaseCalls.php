@@ -1,5 +1,10 @@
 <?php
 $inOrder = false;
+ if (isset($_GET['SearchValues'])){
+     $orderBY = $_GET['orderby']; 
+ }
+ 
+ session_start();
 
 function getConnection(){
     $servername  = 'localhost';

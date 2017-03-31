@@ -44,52 +44,88 @@ include 'DataBaseCalls.php'
     </nav>
     
     
-     <div class="container">
-  <h1>Professors</h1>
-  <p>Here is the list of professors </p>      
-  <a onclick= "orderByName()" type="button" class="btn btn-primary">Order By Name</a>
+    <div class="container">
+      <h1>Professors</h1>
+      <p>Here is the list of professors </p>
+      <form>
+          Order by ID: <input type="radio" name="orderby" value ="id"/>
+          Order by Last Name: <input type="radio" name="orderby" value ="name"/>
+          Order by Dept Name: <input type="radio" name="orderby" value ="dept_name"/>
+          </br>
+          <input class="btn btn-primary" type="submit" name = "SearchValues" value="GO!"/>
+      </form>
+    </div>
   <?php
-        if (!$inOrder):
+   if (isset($_GET['SearchValues'])){
+     $orderBY = $_GET["orderby"]; 
+    //   if (!$orderBY = "id"||!$orderBY = "name"|| !!$orderBY = "dept_name")
+    //   {
+          $nothing = true;
+          echo $orderBY;
+    //  }
+    }
+        // if ($nothing):
   ?>
-  <table  class="table table-hover", "clickable-row">
-  <div>
+  <table  class="table table-hover">
     <?php
     $sql = "select ID, name, dept_name from instructor";
     $result = getQuery($sql);
     if ($result->num_rows > 0) {
-    echo "<tr class='clickable-row'><th> ID </th><th> name </th>
-    <th> dept_name </th></tr>";
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "<tr><td>".$row["ID"]."</td><td>".$row["name"]."</td>
-        <td>".$row["dept_name"]."</td></tr>";
+        echo "<tr class='clickable-row'><th> ID </th><th> name </th>
+        <th> dept_name </th></tr>";
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            echo "<tr><td>".$row["ID"]."</td><td>".$row["name"]."</td>
+            <td>".$row["dept_name"]."</td></tr>";
     }
     echo ""  . "</br>";
-} else {
-    echo "0 results" . "</br>";
-}
+    } else {
+        echo "0 results" . "</br>";
+    }
      ?>
-     <?php else: ?> 
+     </table>
+     <? elseif ($orderBY = "name"): ?> 
      <table  class="table table-hover", "clickable-row">
-         <div>
-         <?php
-    $sql = "select ID, name, dept_name from instructor order by name";
-    $result = getQuery($sql);
-    if ($result->num_rows > 0) {
-    echo "<tr class='clickable-row'><th> ID </th><th> name </th>
-    <th> dept_name </th></tr>";
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "<tr><td>".$row["ID"]."</td><td>".$row["name"]."</td>
-        <td>".$row["dept_name"]."</td></tr>";
-    }
-    echo ""  . "</br>";
-} else {
-    echo "0 results" . "</br>";
-}
-     ?>
-     <?php endif; ?>
-</div>
+         
+    <?php
+        $sql = "select ID, name, dept_name from instructor order by name";
+        $result = getQuery($sql);
+        if ($result->num_rows > 0) {
+            echo "<tr class='clickable-row'><th> ID </th><th> name </th>
+            <th> dept_name </th></tr>";
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                echo "<tr><td>".$row["ID"]."</td><td>".$row["name"]."</td>
+                <td>".$row["dept_name"]."</td></tr>";
+        }
+        echo ""  . "</br>";
+        } else {
+            echo "0 results" . "</br>";
+        }
+    ?>
+    </table>
+         <table  class="table table-hover", "clickable-row">
+         
+    <?php
+        $sql = "select ID, name, dept_name from instructor order by dept_name";
+        $result = getQuery($sql);
+        if ($result->num_rows > 0) {
+            echo "<tr class='clickable-row'><th> ID </th><th> name </th>
+            <th> dept_name </th></tr>";
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+                echo "<tr><td>".$row["ID"]."</td><td>".$row["name"]."</td>
+                <td>".$row["dept_name"]."</td></tr>";
+        }
+        echo ""  . "</br>";
+        } else {
+            echo "0 results" . "</br>";
+        }
+    ?>
+    </table>
+     <?//php endif; ?>
+     
+
 </div>
         
 </body>
